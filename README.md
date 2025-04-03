@@ -1,39 +1,38 @@
-# 💱 Conversor de Peso Chileno (CLP) para Real (BRL)
+# 💱 Chilean Peso (CLP) to Real (BRL) Converter
 
-Projeto simples desenvolvido com HTML, CSS e JavaScript para converter valores em **Peso Chileno (CLP)** para **Real (BRL)**.
+Simple project developed with HTML, CSS and JavaScript to convert values in **Chilean Peso (CLP)** to **Real (BRL)**.
 
 ![preview](https://i.postimg.cc/YCGmyDpM/Whats-App-Image-2025-03-26-at-11-01-52.jpg)
 
-## 📌 Funcionalidades
+## 📌 Features
 
-- Conversão de valores com base em uma taxa fixa.
-- Interface minimalista e responsiva.
-- 100% client-side e leve.
+- Conversion of values based on a fixed rate.
+- Minimalist and responsive interface.
+- 100% client-side and lightweight.
 
-## 🚀 Demonstração
+## 🚀 Demo
 
-Acesse a versão online via GitHub Pages:  
+Access the online version via GitHub Pages:  
 👉 [https://christiandrades.github.io/conversor-peso-real](https://christiandrades.github.io/conversor-peso-real)
 
-## 🧠 Tecnologias Utilizadas
+## 🧠 Technologies used
 
 - HTML5
 - CSS3
-- JavaScript (puro)
+- JavaScript (pure)
 
-## 🛠️ Como Usar
+## 🛠️ How to use
 
-1. Clone o repositório:
+1. Clone the repository:
 bash git clone https://github.com/christiandrades/conversor-peso-real.git
 
-2. Abra o arquivo index.html em seu navegador.
-Digite o valor em pesos chilenos e veja o resultado em reais.
-📷 Captura de Tela
+2. Open the index.html file in your browser.
+Type in the amount in Chilean pesos and see the result in reais.
+Screenshot
 
-<img src="https://i.postimg.cc/YCGmyDpM/Whats-App-Image-2025-03-26-at-11-01-52.jpg" alt="Preview do Conversor" width="600"/>
-📄 Licença
+<img src=“https://i.postimg.cc/YCGmyDpM/Whats-App-Image-2025-03-26-at-11-01-52.jpg” alt=“Converter Preview” width=“600”/>
+License
 
-Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
+This project is under the MIT license. See the LICENSE file for more details.
 
-Feito com 💚 por Christiandrades
-
+Made with 💚 by Christiandrades
