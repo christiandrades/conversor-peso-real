@@ -2,7 +2,17 @@
 
 Simple project developed with HTML, CSS and JavaScript to convert values in **Chilean Peso (CLP)** to **Real (BRL)**.
 
-![preview](https://i.postimg.cc/YCGmyDpM/Whats-App-Image-2025-03-26-at-11-01-52.jpg)
+## 📷 Application Previews
+
+<div align="center">
+  <img src="https://i.postimg.cc/sDvQVMk8/IMG-3072.jpg" alt="Tela 1" width="400" />
+  <br />
+  <img src="https://i.postimg.cc/GhVB9crp/IMG-3073.jpg" alt="Tela 2" width="400" />
+  <br />
+  <img src="https://i.postimg.cc/tgHYt2sQ/IMG-3074.jpg" alt="Tela 3" width="400" />
+  <br />
+  <img src="https://i.postimg.cc/GmD4yZhx/IMG-3075.jpg" alt="Tela 4" width="400" />
+</div>
 
 ## 📌 Features
 
