@@ -44,10 +44,11 @@ Access the online version via GitHub Pages:
 ## 🛠️ How to Use
 
 1. Clone the repository:
-```bash
-2. git clone https://github.com/christiandrades/conversor-peso-real.git
-3. Open the index.html file in your browser.
-Type in the amount in Chilean pesos and see the result in Brazilian reais.
+   ```bash
+   git clone https://github.com/christiandrades/conversor-peso-real.git
+   ```
+2. Open the `index.html` file in your browser.
+3. Informe o valor em pesos chilenos no campo de entrada e clique em **Converter!** para ver o resultado em reais.
 
 ---
 
