@@ -34,6 +34,23 @@ p {
   margin-bottom: 20px;
 }
 
+input,
+select {
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.select-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
 button {
   padding: 12px 24px;
   font-size: 16px;
