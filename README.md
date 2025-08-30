@@ -1,12 +1,12 @@
-# 💱 Currency Converter using Wise API
+# 💱 Currency Converter using AwesomeAPI
 
-Simple project developed with HTML, CSS and JavaScript to convert values between **any currencies** using rates from **Wise**.
+Simple project developed with HTML, CSS and JavaScript to convert values between **any currencies** using rates from **AwesomeAPI**.
 
 ---
 
 ## 📌 Features
 
-- Conversion of values using real-time rates from Wise.
+- Conversion of values using real-time rates from AwesomeAPI.
 - Support for multiple currency pairs.
 - Minimalist and responsive interface.
 - 100% client-side and lightweight.
@@ -45,14 +45,15 @@ Access the online version via GitHub Pages:
 ## 🛠️ How to Use
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/christiandrades/conversor-peso-real.git
 ```
+
 2. Open the `index.html` file in your browser.
 3. Inform the amount and select the origin and destination currencies.
 
 ---
-
 
 📄 License
 
@@ -60,5 +61,3 @@ This project is under the MIT license.
 See the LICENSE file for more details.
 
 Made with 💚 by [Christiandrades](https://github.com/christiandrades)
-
-
