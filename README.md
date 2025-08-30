@@ -6,10 +6,13 @@ Simple project developed with HTML, CSS and JavaScript to convert values between
 
 ## 📌 Features
 
-- Conversion of values using real-time rates from Wise.
-- Support for multiple currency pairs.
-- Minimalist and responsive interface.
-- 100% client-side and lightweight.
+- **Real-time conversion** using Wise API (with API key) or simulated rates (demo mode)
+- Support for multiple currency pairs with expanded currency list
+- **Dual operation mode**: Works with or without Wise API key
+- Clear visual indicators for API connection status
+- Minimalist and responsive interface
+- 100% client-side and lightweight
+- Intelligent fallback system for offline usage
 
 ---
 
@@ -44,12 +47,23 @@ Access the online version via GitHub Pages:
 
 ## 🛠️ How to Use
 
+### Modo Básico (Taxas Simuladas)
 1. Clone the repository:
 ```bash
 git clone https://github.com/christiandrades/conversor-peso-real.git
 ```
 2. Open the `index.html` file in your browser.
-3. Inform the amount and select the origin and destination currencies.
+3. The converter will work with simulated exchange rates for demonstration.
+
+### Modo Completo (API Wise Real)
+1. Create a Wise Business account at [wise.com](https://wise.com)
+2. Access the [Wise API documentation](https://wise.com/help/articles/2932150/wise-api)
+3. Generate an API key in the developer panel
+4. Edit the `script.js` file and add your API key:
+```javascript
+const API_KEY = 'your-wise-api-key-here';
+```
+5. Open the `index.html` file in your browser to use real exchange rates.
 
 ---
 
