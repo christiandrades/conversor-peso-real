@@ -1,12 +1,13 @@
-# 💱 Chilean Peso (CLP) to Real (BRL) Converter
+# 💱 Currency Converter using Wise API
 
-Simple project developed with HTML, CSS and JavaScript to convert values in **Chilean Peso (CLP)** to **Real (BRL)**.
+Simple project developed with HTML, CSS and JavaScript to convert values between **any currencies** using rates from **Wise**.
 
 ---
 
 ## 📌 Features
 
-- Conversion of values based on a fixed rate.
+- Conversion of values using real-time rates from Wise.
+- Support for multiple currency pairs.
 - Minimalist and responsive interface.
 - 100% client-side and lightweight.
 
@@ -45,9 +46,10 @@ Access the online version via GitHub Pages:
 
 1. Clone the repository:
 ```bash
-2. git clone https://github.com/christiandrades/conversor-peso-real.git
-3. Open the index.html file in your browser.
-Type in the amount in Chilean pesos and see the result in Brazilian reais.
+git clone https://github.com/christiandrades/conversor-peso-real.git
+```
+2. Open the `index.html` file in your browser.
+3. Inform the amount and select the origin and destination currencies.
 
 ---
 

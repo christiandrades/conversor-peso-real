@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Conversor Peso para Real</title>
+  <title>Conversor de Moedas</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -11,9 +11,19 @@
 
   <div class="container">
     <div class="content">
-      <h2>Conversor</h2>
-      <p>Peso para Real:</p>
-      <button onclick="conversor()">Converter!</button>
+      <h2>Conversor de Moedas</h2>
+      <p>Informe o valor e selecione as moedas:</p>
+
+      <input id="amount" type="number" placeholder="Valor" />
+
+      <div class="select-group">
+        <select id="fromCurrency"></select>
+        <span>→</span>
+        <select id="toCurrency"></select>
+      </div>
+
+      <button id="convert-btn">Converter</button>
+      <p id="result"></p>
     </div>
   </div>
 
