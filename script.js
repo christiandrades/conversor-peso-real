@@ -64,6 +64,34 @@ function popularMoedas(moedas) {
   para.value = 'BRL';
 }
 
+async function obterTaxa(de, para) {
+  try {
+    const response = await fetch(`${API_URL}/rates?source=${de}&target=${para}`, {
+      headers: API_KEY ? { Authorization: `Bearer ${API_KEY}` } : {},
+    });
+    if (!response.ok) throw new Error('Falha ao obter taxa');
+    const data = await response.json();
+    const taxa = Array.isArray(data) ? data[0]?.rate : data.rate;
+    if (!taxa) throw new Error('Taxa não encontrada');
+    return taxa;
+  } catch (error) {
+    console.warn('Falha ao obter taxa pela Wise, tentando fallback:', error);
+    const params = new URLSearchParams({ from: de, to: para });
+    const fallbackResponse = await fetch(
+      `https://api.exchangerate.host/convert?${params.toString()}`
+    );
+    if (!fallbackResponse.ok) {
+      throw new Error('Falha ao obter taxa de fallback');
+    }
+    const fallbackData = await fallbackResponse.json();
+    const taxaFallback = fallbackData?.info?.rate;
+    if (!taxaFallback) {
+      throw new Error('Taxa de fallback não encontrada');
+    }
+    return taxaFallback;
+  }
+}
+
 async function converter() {
   const valor = parseFloat(document.getElementById('amount').value);
   const de = document.getElementById('fromCurrency').value;
@@ -73,18 +101,13 @@ async function converter() {
     return;
   }
   try {
-    const response = await fetch(`${API_URL}/rates?source=${de}&target=${para}`, {
-      headers: API_KEY ? { Authorization: `Bearer ${API_KEY}` } : {},
-    });
-    if (!response.ok) throw new Error('Falha ao obter taxa');
-    const data = await response.json();
-    const taxa = Array.isArray(data) ? data[0]?.rate : data.rate;
-    if (!taxa) throw new Error('Taxa não encontrada');
+    const taxa = await obterTaxa(de, para);
     const convertido = (valor * taxa).toFixed(2);
     document.getElementById('result').textContent = `💰 ${convertido} ${para}`;
   } catch (error) {
     console.error('Erro na conversão:', error);
-    document.getElementById('result').textContent = 'Erro ao converter.';
+    document.getElementById('result').textContent =
+      'Erro ao converter. Tente novamente mais tarde.';
   }
 }
 
