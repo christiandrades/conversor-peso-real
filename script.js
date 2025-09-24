@@ -11,12 +11,39 @@ async function fetchCurrencies() {
     return await response.json();
   } catch (error) {
     console.error('Erro ao buscar moedas:', error);
-    // Lista de fallback mínima
+    // Lista de fallback com moedas populares suportadas pela Wise
     return [
-      { code: 'USD', name: 'US Dollar' },
-      { code: 'EUR', name: 'Euro' },
+      { code: 'AED', name: 'Dirham dos Emirados Árabes Unidos' },
+      { code: 'ARS', name: 'Peso Argentino' },
+      { code: 'AUD', name: 'Dólar Australiano' },
       { code: 'BRL', name: 'Real Brasileiro' },
+      { code: 'CAD', name: 'Dólar Canadense' },
+      { code: 'CHF', name: 'Franco Suíço' },
       { code: 'CLP', name: 'Peso Chileno' },
+      { code: 'CNY', name: 'Yuan Chinês' },
+      { code: 'COP', name: 'Peso Colombiano' },
+      { code: 'CZK', name: 'Coroa Checa' },
+      { code: 'DKK', name: 'Coroa Dinamarquesa' },
+      { code: 'EUR', name: 'Euro' },
+      { code: 'GBP', name: 'Libra Esterlina' },
+      { code: 'HKD', name: 'Dólar de Hong Kong' },
+      { code: 'HUF', name: 'Forint Húngaro' },
+      { code: 'ILS', name: 'Novo Shekel Israelense' },
+      { code: 'INR', name: 'Rupia Indiana' },
+      { code: 'JPY', name: 'Iene Japonês' },
+      { code: 'MXN', name: 'Peso Mexicano' },
+      { code: 'NOK', name: 'Coroa Norueguesa' },
+      { code: 'NZD', name: 'Dólar Neozelandês' },
+      { code: 'PEN', name: 'Sol Peruano' },
+      { code: 'PLN', name: 'Zloty Polonês' },
+      { code: 'RON', name: 'Leu Romeno' },
+      { code: 'SEK', name: 'Coroa Sueca' },
+      { code: 'SGD', name: 'Dólar de Singapura' },
+      { code: 'THB', name: 'Baht Tailandês' },
+      { code: 'TRY', name: 'Lira Turca' },
+      { code: 'USD', name: 'Dólar Americano' },
+      { code: 'UYU', name: 'Peso Uruguaio' },
+      { code: 'ZAR', name: 'Rand Sul-Africano' },
     ];
   }
 }
@@ -24,7 +51,8 @@ async function fetchCurrencies() {
 function popularMoedas(moedas) {
   const de = document.getElementById('fromCurrency');
   const para = document.getElementById('toCurrency');
-  moedas.forEach((m) => {
+  const listaOrdenada = [...moedas].sort((a, b) => a.code.localeCompare(b.code));
+  listaOrdenada.forEach((m) => {
     const opt = document.createElement('option');
     opt.value = m.code;
     opt.textContent = `${m.code} - ${m.name}`;
