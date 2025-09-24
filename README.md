@@ -7,7 +7,7 @@ Simple project developed with HTML, CSS and JavaScript to convert values between
 ## 📌 Features
 
 - Conversion of values using real-time rates from Wise.
-- Support for multiple currency pairs.
+- Support for multiple currency pairs, inclusive of dezenas de moedas populares do conversor da Wise mesmo sem acesso à API.
 - Minimalist and responsive interface.
 - 100% client-side and lightweight.
 
@@ -50,6 +50,14 @@ git clone https://github.com/christiandrades/conversor-peso-real.git
 ```
 2. Open the `index.html` file in your browser.
 3. Inform the amount and select the origin and destination currencies.
+
+### ✅ Testes automatizados
+
+Caso deseje garantir o comportamento do fallback sem depender das APIs externas, execute:
+
+```bash
+node tests/test.js
+```
 
 ---
 
