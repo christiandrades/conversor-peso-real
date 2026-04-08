@@ -1,0 +1,16 @@
+{
+  "name": "Conversor de Moedas",
+  "short_name": "Conversor",
+  "description": "Conversor de moedas com taxas em tempo real",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a1a2e",
+  "theme_color": "#1a1a2e",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ]
+}

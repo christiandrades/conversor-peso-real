@@ -1,0 +1,155 @@
+<div class="page">
+  <header class="page-header">
+    <img
+      src="https://i.postimg.cc/YCGmyDpM/Whats-App-Image-2025-03-26-at-11-01-52.jpg"
+      alt="Logo Kr Converter"
+      class="logo"
+    />
+    <div class="header-text">
+      <h1>Conversor de Moedas</h1>
+      <p class="subtitle">Taxas em tempo real</p>
+    </div>
+  </header>
+
+  <main>
+    <mat-card class="converter-card">
+      <mat-card-content>
+
+        <!-- Valor -->
+        <mat-form-field appearance="outline" class="field-full">
+          <mat-label>Valor</mat-label>
+          <input
+            matInput
+            type="number"
+            placeholder="Ex: 1000"
+            [(ngModel)]="valor"
+            min="0"
+            (keyup.enter)="converter()"
+          />
+          <mat-icon matSuffix>attach_money</mat-icon>
+        </mat-form-field>
+
+        <!-- Par de moedas -->
+        <div class="currency-row">
+          <mat-form-field appearance="outline" class="field-currency">
+            <mat-label>De</mat-label>
+            <mat-select [(ngModel)]="deMoeda" [disabled]="carregandoMoedas()">
+              @if (carregandoMoedas()) {
+                <mat-option disabled>Carregando...</mat-option>
+              }
+              @for (m of moedas(); track m.code) {
+                <mat-option [value]="m.code">{{ m.code }} — {{ m.name }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <button
+            mat-icon-button
+            class="swap-btn"
+            (click)="inverter()"
+            matTooltip="Inverter moedas"
+            [disabled]="convertendo()"
+          >
+            <mat-icon>swap_horiz</mat-icon>
+          </button>
+
+          <mat-form-field appearance="outline" class="field-currency">
+            <mat-label>Para</mat-label>
+            <mat-select [(ngModel)]="paraMoeda" [disabled]="carregandoMoedas()">
+              @if (carregandoMoedas()) {
+                <mat-option disabled>Carregando...</mat-option>
+              }
+              @for (m of moedas(); track m.code) {
+                <mat-option [value]="m.code">{{ m.code }} — {{ m.name }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <!-- Botão converter -->
+        <button
+          mat-flat-button
+          class="convert-btn"
+          (click)="converter()"
+          [disabled]="convertendo() || carregandoMoedas()"
+        >
+          @if (convertendo()) {
+            <mat-spinner diameter="20" />
+            <span>Convertendo…</span>
+          } @else {
+            <ng-container>
+              <mat-icon>currency_exchange</mat-icon>
+              <span>Converter</span>
+            </ng-container>
+          }
+        </button>
+
+        <!-- Resultado -->
+        @if (resultado()) {
+          <div class="result-box">
+            <span class="result-label">Resultado</span>
+            <span class="result-value">{{ resultado() }} {{ paraMoeda }}</span>
+          </div>
+        }
+
+        <!-- Erro -->
+        @if (erro()) {
+          <div class="error-box">
+            <mat-icon>error_outline</mat-icon>
+            <span>{{ erro() }}</span>
+          </div>
+        }
+
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Histórico -->
+    <mat-card class="historico-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>history</mat-icon>
+          Histórico
+        </mat-card-title>
+        <button
+          mat-button
+          color="warn"
+          class="limpar-btn"
+          (click)="limparHistorico()"
+          [disabled]="historico().length === 0"
+        >
+          <mat-icon>delete_sweep</mat-icon>
+          Limpar
+        </button>
+      </mat-card-header>
+
+      <mat-divider />
+
+      <mat-card-content class="historico-content">
+        @if (historico().length === 0) {
+          <p class="historico-vazio">
+            <mat-icon>info_outline</mat-icon>
+            Nenhuma conversão realizada ainda.
+          </p>
+        } @else {
+          <ul class="historico-lista">
+            @for (item of historico(); track item.data) {
+              <li class="historico-item">
+                <div class="item-main">
+                  <span class="item-valor">{{ item.valor }} {{ item.de }}</span>
+                  <mat-icon class="item-arrow">arrow_forward</mat-icon>
+                  <span class="item-convertido">{{ item.convertido }} {{ item.para }}</span>
+                </div>
+                <div class="item-meta">
+                  <span class="item-taxa">taxa: {{ item.taxa.toFixed(4) }}</span>
+                  <span class="item-data">{{ item.data }}</span>
+                </div>
+              </li>
+            }
+          </ul>
+        }
+      </mat-card-content>
+    </mat-card>
+  </main>
+
+  <footer>Kr Converter © 2025</footer>
+</div>
