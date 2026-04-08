@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Conversor de moedas com taxas em tempo real" />
+  <meta name="theme-color" content="#007bff" />
   <title>Conversor de Moedas</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
 </head>
 <body>
   <img src="https://i.postimg.cc/YCGmyDpM/Whats-App-Image-2025-03-26-at-11-01-52.jpg" alt="Logo" class="logo">
@@ -25,10 +28,23 @@
       <button id="convert-btn">Converter</button>
       <p id="result"></p>
     </div>
+
+    <div class="historico">
+      <div class="historico-header">
+        <h3>Histórico de Conversões</h3>
+        <button id="limpar-historico" class="btn-limpar">Limpar</button>
+      </div>
+      <ul id="historico-lista"></ul>
+    </div>
   </div>
 
   <footer>Kr Converter - 2025</footer>
 
   <script src="script.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js');
+    }
+  </script>
 </body>
 </html>

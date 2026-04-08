@@ -92,6 +92,44 @@ async function obterTaxa(de, para) {
   }
 }
 
+const HISTORICO_KEY = 'conversor_historico';
+const HISTORICO_MAX = 10;
+
+function salvarHistorico(de, para, valor, convertido, taxa) {
+  const historico = JSON.parse(localStorage.getItem(HISTORICO_KEY) || '[]');
+  historico.unshift({
+    de,
+    para,
+    valor,
+    convertido,
+    taxa,
+    data: new Date().toLocaleString('pt-BR'),
+  });
+  if (historico.length > HISTORICO_MAX) historico.length = HISTORICO_MAX;
+  localStorage.setItem(HISTORICO_KEY, JSON.stringify(historico));
+  renderizarHistorico(historico);
+}
+
+function renderizarHistorico(historico) {
+  const lista = document.getElementById('historico-lista');
+  if (!lista) return;
+  lista.innerHTML = '';
+  if (historico.length === 0) {
+    lista.innerHTML = '<li class="historico-vazio">Nenhuma conversão realizada.</li>';
+    return;
+  }
+  historico.forEach((item) => {
+    const li = document.createElement('li');
+    li.textContent = `${item.valor} ${item.de} → ${item.convertido} ${item.para} (taxa: ${item.taxa.toFixed(4)}) — ${item.data}`;
+    lista.appendChild(li);
+  });
+}
+
+function limparHistorico() {
+  localStorage.removeItem(HISTORICO_KEY);
+  renderizarHistorico([]);
+}
+
 async function converter() {
   const valor = parseFloat(document.getElementById('amount').value);
   const de = document.getElementById('fromCurrency').value;
@@ -104,6 +142,7 @@ async function converter() {
     const taxa = await obterTaxa(de, para);
     const convertido = (valor * taxa).toFixed(2);
     document.getElementById('result').textContent = `💰 ${convertido} ${para}`;
+    salvarHistorico(de, para, valor, convertido, taxa);
   } catch (error) {
     console.error('Erro na conversão:', error);
     document.getElementById('result').textContent =
@@ -115,6 +154,9 @@ async function init() {
   const moedas = await fetchCurrencies();
   popularMoedas(moedas);
   document.getElementById('convert-btn').addEventListener('click', converter);
+  document.getElementById('limpar-historico')?.addEventListener('click', limparHistorico);
+  const historicoSalvo = JSON.parse(localStorage.getItem(HISTORICO_KEY) || '[]');
+  renderizarHistorico(historicoSalvo);
 }
 
 document.addEventListener('DOMContentLoaded', init);

@@ -72,3 +72,62 @@ footer {
   font-size: 14px;
   color: #666;
 }
+
+.historico {
+  margin-top: 24px;
+  border-top: 1px solid #eee;
+  padding-top: 16px;
+  text-align: left;
+}
+
+.historico-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.historico h3 {
+  font-size: 16px;
+  margin: 0;
+  color: #555;
+}
+
+.btn-limpar {
+  padding: 4px 10px;
+  font-size: 13px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-limpar:hover {
+  background-color: #c0392b;
+}
+
+#historico-lista {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+#historico-lista li {
+  font-size: 13px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  color: #444;
+}
+
+#historico-lista li:nth-child(odd) {
+  background-color: #f7f9fb;
+}
+
+.historico-vazio {
+  color: #aaa;
+  font-style: italic;
+}
