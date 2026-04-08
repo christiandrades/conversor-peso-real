@@ -25,7 +25,7 @@ const localStorageMock = {
 };
 global.localStorage = localStorageMock;
 
-// --- Funções extraídas de script.js para teste unitário ---
+// --- Funções copiadas de script.js para teste unitário ---
 const HISTORICO_KEY = 'conversor_historico';
 const HISTORICO_MAX = 10;
 
@@ -57,7 +57,6 @@ const h2 = salvarHistorico('USD', 'EUR', 100, '92.00', 0.92);
 assert('Novo item vai para o início da lista', h2[0].de === 'USD');
 assert('Item anterior permanece na posição 1', h2[1].de === 'CLP');
 
-// Testa limite máximo
 localStorageMock.removeItem(HISTORICO_KEY);
 for (let i = 0; i < 12; i++) {
   salvarHistorico('USD', 'BRL', i, String(i * 5), 5);
@@ -65,10 +64,8 @@ for (let i = 0; i < 12; i++) {
 const hMax = JSON.parse(localStorage.getItem(HISTORICO_KEY));
 assert(`Histórico não ultrapassa ${HISTORICO_MAX} itens`, hMax.length === HISTORICO_MAX);
 
-// Testa limpar histórico
 limparHistorico();
-const hVazio = localStorage.getItem(HISTORICO_KEY);
-assert('Limpar histórico remove os dados do localStorage', hVazio === null);
+assert('Limpar histórico remove os dados do localStorage', localStorage.getItem(HISTORICO_KEY) === null);
 
 // --- Testes: Validação de valor ---
 console.log('\n[Validação de Valor]');
@@ -95,6 +92,18 @@ function formatarConvertido(valor, taxa) {
 assert('1000 CLP a 0.0055 = 5.50 BRL', formatarConvertido(1000, 0.0055) === '5.50');
 assert('100 USD a 0.92 = 92.00 EUR', formatarConvertido(100, 0.92) === '92.00');
 assert('1 USD a 5.00 = 5.00 BRL', formatarConvertido(1, 5) === '5.00');
+
+// --- Testes: Códigos de moeda em lowercase para fawazahmed0 ---
+console.log('\n[Conversão de Código de Moeda]');
+
+function toApiCode(code) { return code.toLowerCase(); }
+function fromApiCode(code) { return code.toUpperCase(); }
+
+assert('CLP → clp', toApiCode('CLP') === 'clp');
+assert('BRL → brl', toApiCode('BRL') === 'brl');
+assert('USD → usd', toApiCode('USD') === 'usd');
+assert('clp → CLP', fromApiCode('clp') === 'CLP');
+assert('brl → BRL', fromApiCode('brl') === 'BRL');
 
 // --- Resumo ---
 console.log(`\n${'─'.repeat(40)}`);

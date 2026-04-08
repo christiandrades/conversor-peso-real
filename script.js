@@ -1,95 +1,102 @@
-const API_URL = 'https://api.wise.com/v1';
-// Informe sua chave da Wise, se necessário
-const API_KEY = '';
+const FAWAZ_BASE = 'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1';
+const FAWAZ_MIRROR = 'https://latest.currency-api.pages.dev/v1';
+const FRANKFURTER_URL = 'https://api.frankfurter.app';
 
 async function fetchCurrencies() {
-  try {
-    const response = await fetch(`${API_URL}/currencies`, {
-      headers: API_KEY ? { Authorization: `Bearer ${API_KEY}` } : {},
-    });
-    if (!response.ok) throw new Error('Falha ao carregar moedas');
-    return await response.json();
-  } catch (error) {
-    console.error('Erro ao buscar moedas:', error);
-    // Lista de fallback com moedas populares suportadas pela Wise
-    return [
-      { code: 'AED', name: 'Dirham dos Emirados Árabes Unidos' },
-      { code: 'ARS', name: 'Peso Argentino' },
-      { code: 'AUD', name: 'Dólar Australiano' },
-      { code: 'BRL', name: 'Real Brasileiro' },
-      { code: 'CAD', name: 'Dólar Canadense' },
-      { code: 'CHF', name: 'Franco Suíço' },
-      { code: 'CLP', name: 'Peso Chileno' },
-      { code: 'CNY', name: 'Yuan Chinês' },
-      { code: 'COP', name: 'Peso Colombiano' },
-      { code: 'CZK', name: 'Coroa Checa' },
-      { code: 'DKK', name: 'Coroa Dinamarquesa' },
-      { code: 'EUR', name: 'Euro' },
-      { code: 'GBP', name: 'Libra Esterlina' },
-      { code: 'HKD', name: 'Dólar de Hong Kong' },
-      { code: 'HUF', name: 'Forint Húngaro' },
-      { code: 'ILS', name: 'Novo Shekel Israelense' },
-      { code: 'INR', name: 'Rupia Indiana' },
-      { code: 'JPY', name: 'Iene Japonês' },
-      { code: 'MXN', name: 'Peso Mexicano' },
-      { code: 'NOK', name: 'Coroa Norueguesa' },
-      { code: 'NZD', name: 'Dólar Neozelandês' },
-      { code: 'PEN', name: 'Sol Peruano' },
-      { code: 'PLN', name: 'Zloty Polonês' },
-      { code: 'RON', name: 'Leu Romeno' },
-      { code: 'SEK', name: 'Coroa Sueca' },
-      { code: 'SGD', name: 'Dólar de Singapura' },
-      { code: 'THB', name: 'Baht Tailandês' },
-      { code: 'TRY', name: 'Lira Turca' },
-      { code: 'USD', name: 'Dólar Americano' },
-      { code: 'UYU', name: 'Peso Uruguaio' },
-      { code: 'ZAR', name: 'Rand Sul-Africano' },
-    ];
+  const urls = [
+    `${FAWAZ_BASE}/currencies.json`,
+    `${FAWAZ_MIRROR}/currencies.json`,
+  ];
+  for (const url of urls) {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) continue;
+      const data = await response.json();
+      return Object.entries(data)
+        .map(([code, name]) => ({ code: code.toUpperCase(), name }))
+        .sort((a, b) => a.code.localeCompare(b.code));
+    } catch { /* tenta próxima */ }
   }
+  console.warn('APIs de moedas indisponíveis, usando lista local.');
+  return [
+    { code: 'AED', name: 'Dirham dos Emirados Árabes Unidos' },
+    { code: 'ARS', name: 'Peso Argentino' },
+    { code: 'AUD', name: 'Dólar Australiano' },
+    { code: 'BRL', name: 'Real Brasileiro' },
+    { code: 'CAD', name: 'Dólar Canadense' },
+    { code: 'CHF', name: 'Franco Suíço' },
+    { code: 'CLP', name: 'Peso Chileno' },
+    { code: 'CNY', name: 'Yuan Chinês' },
+    { code: 'COP', name: 'Peso Colombiano' },
+    { code: 'CZK', name: 'Coroa Checa' },
+    { code: 'DKK', name: 'Coroa Dinamarquesa' },
+    { code: 'EUR', name: 'Euro' },
+    { code: 'GBP', name: 'Libra Esterlina' },
+    { code: 'HKD', name: 'Dólar de Hong Kong' },
+    { code: 'HUF', name: 'Forint Húngaro' },
+    { code: 'ILS', name: 'Novo Shekel Israelense' },
+    { code: 'INR', name: 'Rupia Indiana' },
+    { code: 'JPY', name: 'Iene Japonês' },
+    { code: 'MXN', name: 'Peso Mexicano' },
+    { code: 'NOK', name: 'Coroa Norueguesa' },
+    { code: 'NZD', name: 'Dólar Neozelandês' },
+    { code: 'PEN', name: 'Sol Peruano' },
+    { code: 'PLN', name: 'Zloty Polonês' },
+    { code: 'RON', name: 'Leu Romeno' },
+    { code: 'SEK', name: 'Coroa Sueca' },
+    { code: 'SGD', name: 'Dólar de Singapura' },
+    { code: 'THB', name: 'Baht Tailandês' },
+    { code: 'TRY', name: 'Lira Turca' },
+    { code: 'USD', name: 'Dólar Americano' },
+    { code: 'UYU', name: 'Peso Uruguaio' },
+    { code: 'ZAR', name: 'Rand Sul-Africano' },
+  ];
 }
 
 function popularMoedas(moedas) {
   const de = document.getElementById('fromCurrency');
   const para = document.getElementById('toCurrency');
-  const listaOrdenada = [...moedas].sort((a, b) => a.code.localeCompare(b.code));
-  listaOrdenada.forEach((m) => {
+  moedas.forEach((m) => {
     const opt = document.createElement('option');
     opt.value = m.code;
     opt.textContent = `${m.code} - ${m.name}`;
-    const opt2 = opt.cloneNode(true);
     de.appendChild(opt);
-    para.appendChild(opt2);
+    para.appendChild(opt.cloneNode(true));
   });
   de.value = 'CLP';
   para.value = 'BRL';
 }
 
 async function obterTaxa(de, para) {
-  try {
-    const response = await fetch(`${API_URL}/rates?source=${de}&target=${para}`, {
-      headers: API_KEY ? { Authorization: `Bearer ${API_KEY}` } : {},
-    });
-    if (!response.ok) throw new Error('Falha ao obter taxa');
-    const data = await response.json();
-    const taxa = Array.isArray(data) ? data[0]?.rate : data.rate;
-    if (!taxa) throw new Error('Taxa não encontrada');
-    return taxa;
-  } catch (error) {
-    console.warn('Falha ao obter taxa pela Wise, tentando fallback:', error);
-    const params = new URLSearchParams({ from: de, to: para });
-    const fallbackResponse = await fetch(
-      `https://api.exchangerate.host/convert?${params.toString()}`
-    );
-    if (!fallbackResponse.ok) {
-      throw new Error('Falha ao obter taxa de fallback');
-    }
-    const fallbackData = await fallbackResponse.json();
-    const taxaFallback = fallbackData?.info?.rate;
-    if (!taxaFallback) {
-      throw new Error('Taxa de fallback não encontrada');
-    }
-    return taxaFallback;
+  const baseLower = de.toLowerCase();
+  const targetLower = para.toLowerCase();
+
+  // Tenta fawazahmed0 (suporta 170+ moedas, incluindo CLP, ARS, etc.)
+  const fawazUrls = [
+    `${FAWAZ_BASE}/currencies/${baseLower}.json`,
+    `${FAWAZ_MIRROR}/currencies/${baseLower}.json`,
+  ];
+  for (const url of fawazUrls) {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) continue;
+      const data = await response.json();
+      const taxa = data[baseLower]?.[targetLower];
+      if (taxa) return taxa;
+    } catch { /* tenta próxima */ }
   }
+
+  // Fallback: Frankfurter (taxas do BCE, ~33 moedas principais)
+  try {
+    const response = await fetch(`${FRANKFURTER_URL}/latest?from=${de}&to=${para}`);
+    if (response.ok) {
+      const data = await response.json();
+      const taxa = data.rates?.[para];
+      if (taxa) return taxa;
+    }
+  } catch { /* ignora */ }
+
+  throw new Error('Não foi possível obter a taxa de câmbio.');
 }
 
 const HISTORICO_KEY = 'conversor_historico';
@@ -138,6 +145,9 @@ async function converter() {
     alert('Por favor, insira um valor numérico válido.');
     return;
   }
+  const btn = document.getElementById('convert-btn');
+  btn.disabled = true;
+  btn.textContent = 'Convertendo…';
   try {
     const taxa = await obterTaxa(de, para);
     const convertido = (valor * taxa).toFixed(2);
@@ -146,7 +156,10 @@ async function converter() {
   } catch (error) {
     console.error('Erro na conversão:', error);
     document.getElementById('result').textContent =
-      'Erro ao converter. Tente novamente mais tarde.';
+      'Erro ao converter. Verifique sua conexão e tente novamente.';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Converter';
   }
 }
 
