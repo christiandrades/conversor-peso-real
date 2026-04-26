@@ -90,24 +90,35 @@ async function converter() {
   resultEl.textContent = '';
   resultEl.style.color = '';
 
+  const rateEl = document.getElementById('rate-info');
+
   try {
     const taxa = await obterTaxa(de, para);
     const convertido = (valor * taxa).toFixed(2);
     resultEl.textContent = `💰 ${convertido} ${para}`;
     resultEl.style.color = '#27ae60';
+    rateEl.textContent = `Taxa: 1 ${de} = ${taxa.toFixed(6)} ${para}`;
   } catch (error) {
     console.error('Erro na conversão:', error);
     resultEl.textContent = 'Erro ao obter taxa de câmbio. Tente novamente.';
     resultEl.style.color = '#c0392b';
+    rateEl.textContent = '';
   } finally {
     btn.disabled = false;
     btn.textContent = 'Converter';
   }
 }
 
+function trocarMoedas() {
+  const de = document.getElementById('fromCurrency');
+  const para = document.getElementById('toCurrency');
+  [de.value, para.value] = [para.value, de.value];
+}
+
 function init() {
   popularMoedas();
   document.getElementById('convert-btn').addEventListener('click', converter);
+  document.getElementById('swap-btn').addEventListener('click', trocarMoedas);
 }
 
 document.addEventListener('DOMContentLoaded', init);
