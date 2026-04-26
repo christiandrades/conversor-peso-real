@@ -47,7 +47,33 @@ function popularMoedas() {
   para.value = 'BRL';
 }
 
+const CACHE_TTL = 30 * 60 * 1000;
+
+function getCachedRate(de, para) {
+  try {
+    const cached = localStorage.getItem(`rate_${de}_${para}`);
+    if (!cached) return null;
+    const { rate, ts } = JSON.parse(cached);
+    if (Date.now() - ts > CACHE_TTL) {
+      localStorage.removeItem(`rate_${de}_${para}`);
+      return null;
+    }
+    return rate;
+  } catch {
+    return null;
+  }
+}
+
+function setCachedRate(de, para, rate) {
+  try {
+    localStorage.setItem(`rate_${de}_${para}`, JSON.stringify({ rate, ts: Date.now() }));
+  } catch { /* localStorage indisponível */ }
+}
+
 async function obterTaxa(de, para) {
+  const cached = getCachedRate(de, para);
+  if (cached !== null) return cached;
+
   // Primary: open.er-api.com (free, no key, supports all currencies)
   try {
     const res = await fetch(`https://open.er-api.com/v6/latest/${de}`);
@@ -56,6 +82,7 @@ async function obterTaxa(de, para) {
     if (data.result !== 'success') throw new Error('open.er-api resultado inválido');
     const taxa = data.rates[para];
     if (!taxa) throw new Error('Moeda não encontrada');
+    setCachedRate(de, para, taxa);
     return taxa;
   } catch (errPrimary) {
     console.warn('API primária falhou, tentando fallback:', errPrimary.message);
@@ -69,6 +96,7 @@ async function obterTaxa(de, para) {
   const data = await res.json();
   const taxa = data[de.toLowerCase()]?.[para.toLowerCase()];
   if (!taxa) throw new Error('Taxa não encontrada no fallback');
+  setCachedRate(de, para, taxa);
   return taxa;
 }
 
