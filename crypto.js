@@ -61,7 +61,7 @@ async function updateCryptos() {
     renderCryptos(data);
     stampEl.textContent = `Atualizado às ${new Date().toLocaleTimeString('pt-BR')}`;
   } catch (err) {
-    console.error('Erro cotações crypto:', err);
+    console.error(err);
     listEl.innerHTML = '<p class="crypto-error">Não foi possível carregar as cotações. Tentando novamente…</p>';
     stampEl.textContent = '';
   }
