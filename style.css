@@ -22,6 +22,9 @@ body {
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   text-align: center;
+  width: 100%;
+  max-width: 520px;
+  box-sizing: border-box;
 }
 
 h2 {
@@ -92,4 +95,139 @@ footer {
   padding: 20px;
   font-size: 14px;
   color: #666;
+}
+
+/* ── Crypto section ── */
+.crypto-section {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 24px 28px;
+  margin-top: 20px;
+  width: 100%;
+  max-width: 520px;
+  box-sizing: border-box;
+}
+
+.crypto-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.crypto-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.crypto-live-badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: #e74c3c;
+  letter-spacing: 0.5px;
+  animation: pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+.crypto-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.crypto-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.crypto-item:last-child {
+  border-bottom: none;
+}
+
+.crypto-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #f0f4f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.crypto-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 80px;
+}
+
+.crypto-name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.crypto-symbol {
+  font-size: 11px;
+  color: #999;
+}
+
+.crypto-prices {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.crypto-brl {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.crypto-usd {
+  font-size: 11px;
+  color: #999;
+}
+
+.crypto-change {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 7px;
+  border-radius: 5px;
+  min-width: 56px;
+  text-align: center;
+}
+
+.crypto-change.up {
+  color: #27ae60;
+  background: #eafaf1;
+}
+
+.crypto-change.down {
+  color: #e74c3c;
+  background: #fdf2f2;
+}
+
+.crypto-stamp {
+  font-size: 11px;
+  color: #bbb;
+  text-align: right;
+  margin: 10px 0 0;
+}
+
+.crypto-loading,
+.crypto-error {
+  font-size: 14px;
+  color: #999;
+  text-align: center;
+  padding: 20px 0;
+  margin: 0;
 }
