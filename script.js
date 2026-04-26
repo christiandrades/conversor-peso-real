@@ -29,7 +29,12 @@ const CURRENCIES = [
   { code: 'TRY', name: 'Lira Turca' },
   { code: 'USD', name: 'Dólar Americano' },
   { code: 'UYU', name: 'Peso Uruguaio' },
+  { code: 'VES', name: 'Bolívar Venezuelano' },
   { code: 'ZAR', name: 'Rand Sul-Africano' },
+  { code: 'BOB', name: 'Boliviano' },
+  { code: 'DOP', name: 'Peso Dominicano' },
+  { code: 'GTQ', name: 'Quetzal Guatemalteco' },
+  { code: 'PYG', name: 'Guarani Paraguaio' },
 ];
 
 function popularMoedas() {
