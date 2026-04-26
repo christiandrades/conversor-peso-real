@@ -3,6 +3,7 @@ const CURRENCIES = [
   { code: 'ARS', name: 'Peso Argentino' },
   { code: 'AUD', name: 'Dólar Australiano' },
   { code: 'BRL', name: 'Real Brasileiro' },
+  { code: 'BOB', name: 'Boliviano' },
   { code: 'CAD', name: 'Dólar Canadense' },
   { code: 'CHF', name: 'Franco Suíço' },
   { code: 'CLP', name: 'Peso Chileno' },
@@ -10,8 +11,10 @@ const CURRENCIES = [
   { code: 'COP', name: 'Peso Colombiano' },
   { code: 'CZK', name: 'Coroa Checa' },
   { code: 'DKK', name: 'Coroa Dinamarquesa' },
+  { code: 'DOP', name: 'Peso Dominicano' },
   { code: 'EUR', name: 'Euro' },
   { code: 'GBP', name: 'Libra Esterlina' },
+  { code: 'GTQ', name: 'Quetzal Guatemalteco' },
   { code: 'HKD', name: 'Dólar de Hong Kong' },
   { code: 'HUF', name: 'Forint Húngaro' },
   { code: 'ILS', name: 'Novo Shekel Israelense' },
@@ -22,6 +25,7 @@ const CURRENCIES = [
   { code: 'NZD', name: 'Dólar Neozelandês' },
   { code: 'PEN', name: 'Sol Peruano' },
   { code: 'PLN', name: 'Zloty Polonês' },
+  { code: 'PYG', name: 'Guarani Paraguaio' },
   { code: 'RON', name: 'Leu Romeno' },
   { code: 'SEK', name: 'Coroa Sueca' },
   { code: 'SGD', name: 'Dólar de Singapura' },
@@ -31,10 +35,6 @@ const CURRENCIES = [
   { code: 'UYU', name: 'Peso Uruguaio' },
   { code: 'VES', name: 'Bolívar Venezuelano' },
   { code: 'ZAR', name: 'Rand Sul-Africano' },
-  { code: 'BOB', name: 'Boliviano' },
-  { code: 'DOP', name: 'Peso Dominicano' },
-  { code: 'GTQ', name: 'Quetzal Guatemalteco' },
-  { code: 'PYG', name: 'Guarani Paraguaio' },
 ];
 
 function popularMoedas() {
@@ -72,35 +72,33 @@ function getCachedRate(de, para) {
 function setCachedRate(de, para, rate) {
   try {
     localStorage.setItem(`rate_${de}_${para}`, JSON.stringify({ rate, ts: Date.now() }));
-  } catch { /* localStorage indisponível */ }
+  } catch {}
 }
 
 async function obterTaxa(de, para) {
   const cached = getCachedRate(de, para);
   if (cached !== null) return cached;
 
-  // Primary: open.er-api.com (free, no key, supports all currencies)
   try {
     const res = await fetch(`https://open.er-api.com/v6/latest/${de}`);
     if (!res.ok) throw new Error('open.er-api falhou');
     const data = await res.json();
-    if (data.result !== 'success') throw new Error('open.er-api resultado inválido');
+    if (data.result !== 'success') throw new Error('resposta inválida');
     const taxa = data.rates[para];
-    if (!taxa) throw new Error('Moeda não encontrada');
+    if (!taxa) throw new Error('moeda não encontrada');
     setCachedRate(de, para, taxa);
     return taxa;
-  } catch (errPrimary) {
-    console.warn('API primária falhou, tentando fallback:', errPrimary.message);
+  } catch (e) {
+    console.warn('Usando fallback:', e.message);
   }
 
-  // Fallback: fawazahmed0 CDN (GitHub-based, free, supports 150+ currencies)
   const res = await fetch(
     `https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/${de.toLowerCase()}.min.json`
   );
-  if (!res.ok) throw new Error('Todas as APIs de câmbio falharam');
+  if (!res.ok) throw new Error('Falha ao obter taxa de câmbio');
   const data = await res.json();
   const taxa = data[de.toLowerCase()]?.[para.toLowerCase()];
-  if (!taxa) throw new Error('Taxa não encontrada no fallback');
+  if (!taxa) throw new Error('Taxa não encontrada');
   setCachedRate(de, para, taxa);
   return taxa;
 }
@@ -135,7 +133,7 @@ async function converter() {
     resultEl.style.color = '#27ae60';
     rateEl.textContent = `Taxa: 1 ${de} = ${taxa.toFixed(6)} ${para}`;
   } catch (error) {
-    console.error('Erro na conversão:', error);
+    console.error(error);
     resultEl.textContent = 'Erro ao obter taxa de câmbio. Tente novamente.';
     resultEl.style.color = '#c0392b';
     rateEl.textContent = '';
