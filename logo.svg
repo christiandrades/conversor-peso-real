@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <rect width="120" height="120" rx="16" fill="#007bff"/>
+  <text x="60" y="52" text-anchor="middle" fill="white" font-family="Segoe UI, Arial, sans-serif" font-size="28" font-weight="bold">R$</text>
+  <text x="60" y="80" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-family="Segoe UI, Arial, sans-serif" font-size="13">conversor</text>
+  <path d="M28 95 Q60 108 92 95" stroke="rgba(255,255,255,0.4)" stroke-width="2" fill="none" stroke-linecap="round"/>
+</svg>
