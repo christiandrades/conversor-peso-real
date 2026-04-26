@@ -122,7 +122,10 @@ async function converter() {
 
   try {
     const taxa = await obterTaxa(de, para);
-    const convertido = (valor * taxa).toFixed(2);
+    const convertido = new Intl.NumberFormat('pt-BR', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(valor * taxa);
     resultEl.textContent = `💰 ${convertido} ${para}`;
     resultEl.style.color = '#27ae60';
     rateEl.textContent = `Taxa: 1 ${de} = ${taxa.toFixed(6)} ${para}`;
@@ -147,6 +150,9 @@ function init() {
   popularMoedas();
   document.getElementById('convert-btn').addEventListener('click', converter);
   document.getElementById('swap-btn').addEventListener('click', trocarMoedas);
+  document.getElementById('amount').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') converter();
+  });
 }
 
 document.addEventListener('DOMContentLoaded', init);
