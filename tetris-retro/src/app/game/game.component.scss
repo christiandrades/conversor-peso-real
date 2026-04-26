@@ -1,0 +1,127 @@
+@use 'sass:color';
+
+// ── Layout ───────────────────────────────────────────────────────────────────
+.layout {
+  display:         flex;
+  align-items:     flex-start;
+  justify-content: center;
+  gap:             18px;
+  padding:         20px 16px;
+}
+
+// ── Board ────────────────────────────────────────────────────────────────────
+.board-wrap {
+  border:     2px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 24px rgba(0, 240, 240, 0.18), inset 0 0 32px rgba(0, 0, 0, 0.6);
+  transition: border-color 0.3s, box-shadow 0.3s;
+
+  canvas { display: block; }
+
+  &.prisma-active {
+    animation: prisma-border 0.6s infinite alternate;
+  }
+}
+
+@keyframes prisma-border {
+  from { border-color: #ff00ff; box-shadow: 0 0 35px #ff00ff88, 0 0 70px #ff00ff44; }
+  to   { border-color: #00ffff; box-shadow: 0 0 35px #00ffff88, 0 0 70px #00ffff44; }
+}
+
+// ── Side panels ──────────────────────────────────────────────────────────────
+.side-panel {
+  display:        flex;
+  flex-direction: column;
+  gap:            12px;
+  width:          140px;
+}
+
+.panel-box {
+  background: rgba(255, 255, 255, 0.03);
+  border:     1px solid rgba(255, 255, 255, 0.09);
+  padding:    10px 12px;
+
+  canvas { display: block; }
+}
+
+.label {
+  font-size:      7px;
+  letter-spacing: 2.5px;
+  color:          rgba(255, 255, 255, 0.45);
+  margin:         0 0 8px;
+}
+
+.value {
+  font-size:   15px;
+  color:       #fff;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
+}
+
+// ── Controls list ─────────────────────────────────────────────────────────────
+.controls {
+  display:        flex;
+  flex-direction: column;
+  gap:            5px;
+
+  span {
+    font-size:      7px;
+    color:          rgba(255, 255, 255, 0.38);
+    letter-spacing: 0.5px;
+    line-height:    1.5;
+    white-space:    pre;
+  }
+}
+
+// ── Prisma Pulse widget ───────────────────────────────────────────────────────
+.prisma-box {
+  transition: border-color 0.3s, box-shadow 0.3s;
+
+  &.active {
+    border-color: rgba(255, 0, 255, 0.6);
+    box-shadow:   0 0 14px rgba(255, 0, 255, 0.35);
+  }
+}
+
+.prisma-label {
+  background:              linear-gradient(90deg, #ff00ff, #00ffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip:         text;
+}
+
+.meter-wrap {
+  width:           32px;
+  height:          80px;
+  margin:          8px auto;
+  border:          1px solid rgba(255, 255, 255, 0.18);
+  display:         flex;
+  align-items:     flex-end;
+  overflow:        hidden;
+}
+
+.meter-fill {
+  width:      100%;
+  background: linear-gradient(to top, #ff00ff, #00ffff);
+  transition: height 0.35s ease;
+
+  &.pulsing {
+    animation: meter-pulse 0.55s infinite alternate;
+  }
+}
+
+@keyframes meter-pulse {
+  from { opacity: 0.75; }
+  to   { opacity: 1; box-shadow: 0 0 12px #ff00ff; }
+}
+
+.prisma-value {
+  display:        block;
+  font-size:      9px;
+  text-align:     center;
+  color:          rgba(255, 255, 255, 0.45);
+  letter-spacing: 1px;
+
+  &.on {
+    color:       #ff00ff;
+    text-shadow: 0 0 10px #ff00ff;
+  }
+}

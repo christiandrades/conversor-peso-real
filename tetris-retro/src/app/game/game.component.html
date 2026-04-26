@@ -1,0 +1,68 @@
+<div class="layout">
+
+  <!-- Left panel: Hold + Controls -->
+  <aside class="side-panel">
+
+    <div class="panel-box">
+      <p class="label">HOLD</p>
+      <canvas #holdCanvas width="128" height="128"></canvas>
+    </div>
+
+    <div class="panel-box controls">
+      <p class="label">CONTROLS</p>
+      <span>← →&nbsp;&nbsp;Move</span>
+      <span>↑&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rotate</span>
+      <span>↓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Soft drop</span>
+      <span>Space Hard drop</span>
+      <span>C&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hold</span>
+      <span>P&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pause</span>
+    </div>
+
+  </aside>
+
+  <!-- Canvas board -->
+  <div class="board-wrap" [class.prisma-active]="prismaActive">
+    <canvas #gameCanvas [width]="320" [height]="640"></canvas>
+  </div>
+
+  <!-- Right panel: Stats + Next + Prisma Pulse meter -->
+  <aside class="side-panel">
+
+    <div class="panel-box">
+      <p class="label">SCORE</p>
+      <span class="value">{{ score | number }}</span>
+    </div>
+
+    <div class="panel-box">
+      <p class="label">LINES</p>
+      <span class="value">{{ lines }}</span>
+    </div>
+
+    <div class="panel-box">
+      <p class="label">LEVEL</p>
+      <span class="value">{{ level }}</span>
+    </div>
+
+    <div class="panel-box">
+      <p class="label">NEXT</p>
+      <canvas #nextCanvas width="128" height="128"></canvas>
+    </div>
+
+    <!-- Prisma Pulse — exclusive feature meter -->
+    <div class="panel-box prisma-box" [class.active]="prismaActive">
+      <p class="label prisma-label">PRISMA</p>
+      <div class="meter-wrap">
+        <div
+          class="meter-fill"
+          [style.height.%]="prismaActive ? 100 : prismaProgress"
+          [class.pulsing]="prismaActive">
+        </div>
+      </div>
+      <span class="prisma-value" [class.on]="prismaActive">
+        {{ prismaActive ? prismaTimeLeft + 's' : prismaProgress + '%' }}
+      </span>
+    </div>
+
+  </aside>
+
+</div>
